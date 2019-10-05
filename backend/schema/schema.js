@@ -1,7 +1,11 @@
-const graphql = require('graphql')
-const _ = require('loadsh')
+import 'dotenv/config'
 
-const { 
+import * as graphql from 'graphql'
+const _ = require('loadsh')
+import Book from '../model/book.js'
+import Author from '../model/author.js'
+
+const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLSchema,
@@ -9,29 +13,13 @@ const {
   GraphQLInt,
   GraphQLList } = graphql
 
-//dummy data
-let books = [
-  { name: 'Name of the Wind', genre: 'Fantasy', id: '1', authorId: '1'},
-  { name: 'The Final Empire', genre: 'Fantasy', id: '2', authorId: '3'},
-  { name: 'The Long Earth', genre: 'Sci-Fi', id: '3', authorId: '2'},
-  { name: 'The Hero of Ages', genre: 'Fantasy', id: '4', authorId: '2'},
-  { name: 'The Colour of Magic', genre: 'Fantasy', id: '5', authorId: '3'},
-  { name: 'The Light Fantastic', genre: 'Fantasy', id: '6', authorId: '3'}
-]
-
-let authors = [
-  { name: 'Patrick Rothfuss', age: 44, id: '1'},
-  { name: 'Brandon Sanderson', age: 42, id: '2'},
-  { name: 'Terry Pratchett', age: 66, id: '3'}
-]
-
 const BookType = new GraphQLObjectType({
   name: 'Book',
   fields:() => ({
     id: {type: GraphQLID},
     name: {type: GraphQLString},
     genre: {type: GraphQLString},
-    author: { 
+    author: {
       type: AuthorType,
       resolve(parent, args){
         return _.find(authors, { id: parent.authorId })

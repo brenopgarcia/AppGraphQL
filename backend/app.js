@@ -1,15 +1,29 @@
-const express = require('express')
-const graphqlHTTP = require('express-graphql')
-const schema = require('./schema/schema')
+import 'dotenv/config'
 
-const app = express()
+import express from 'express'
 
-app.use('/graphql', graphqlHTTP({
-  schema,
-  graphiql: true
-}))
+import schema from './schema/schema'
+import graphqlHTTP from 'express-graphql'
 
-app.listen(4000, () => {
-  console.log('now listening for requests on port 4000')
-})
+import './database'
 
+class App {
+  constructor() {
+    this.server = express()
+    this.server.listen(4000, () => {
+      console.log('Now listening for requests on port 4000')
+    })
+    this.routes()
+  }
+
+  routes() {
+    this.server.use('/graphql', graphqlHTTP({
+      schema,
+      graphiql: true
+    }))
+  }
+
+
+}
+
+export default new App()
