@@ -4,13 +4,10 @@ import * as compose from 'lodash.flowright';
 import {getAuthorsQuery, addBookMutation, getBooksQuery} from '../queries/queries'
 
 class AddBook extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      name: '',
-      genre: '',
-      authorId: ''
-    }
+  state = {
+    name: '',
+    genre: '',
+    authorId: ''
   }
   displayAuthors(){
     var data = this.props.getAuthorsQuery

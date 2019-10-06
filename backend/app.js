@@ -4,6 +4,7 @@ import express from 'express'
 
 import schema from './schema/schema'
 import graphqlHTTP from 'express-graphql'
+import cors from 'cors'
 
 import './database'
 
@@ -13,7 +14,11 @@ class App {
     this.server.listen(4000, () => {
       console.log('Now listening for requests on port 4000')
     })
+    this.middlewares()
     this.routes()
+  }
+  middlewares(){
+    this.server.use(cors())
   }
 
   routes() {
